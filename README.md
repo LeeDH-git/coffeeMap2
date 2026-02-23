@@ -35,7 +35,7 @@
 6) uploads/
    - 계약서 PDF 및 자료실 파일 저장소
 
-NODE-BOARD-PROJECT
+Construction Management System PROJECT
 ├─ app.js                     # Express 서버 진입점
 ├─ app_old.js                 # 이전 버전 백업
 ├─ db.js                      # SQLite DB 스키마 및 연결 설정
