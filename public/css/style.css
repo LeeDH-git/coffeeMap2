@@ -2184,3 +2184,122 @@ input[readonly] {
         grid-template-columns: 1fr;
     }
 }
+/* CoffeeMap home */
+.coffee-hero {
+    padding: 28px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #111827 0%, #2a4b6f 50%, #9b6b43 100%);
+    color: #fff;
+    margin-bottom: 16px;
+}
+
+.eyebrow {
+    font-size: 12px;
+    letter-spacing: .12em;
+    opacity: .85;
+    margin: 0 0 8px;
+}
+
+.coffee-hero h2 {
+    margin: 0;
+    font-size: 34px;
+    line-height: 1.25;
+}
+
+.hero-desc {
+    margin-top: 12px;
+    max-width: 680px;
+    opacity: .9;
+}
+
+.hero-stats {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.hero-stats article {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.hero-stats strong { font-size: 22px; display: block; }
+.hero-stats span { font-size: 12px; opacity: .9; }
+
+.coffee-section { margin-top: 20px; }
+.section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+.section-head h3 { margin: 0; font-size: 20px; }
+.section-head span { color: var(--muted); font-size: 13px; }
+
+.map-panel {
+    background: #f7f7f8;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px;
+    display: grid;
+    gap: 10px;
+}
+
+.map-pin-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px 12px;
+    border: 1px solid #eceff2;
+}
+
+.pin-title { margin: 0; font-weight: 700; }
+.pin-region { margin: 2px 0 0; color: var(--muted); font-size: 12px; }
+.pin-rating { font-weight: 700; color: #b45309; }
+
+.review-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.review-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    background: #fff;
+}
+
+.review-name { margin: 0; font-weight: 700; }
+.review-beans { margin: 4px 0; font-size: 12px; color: #4b5563; }
+.review-text { margin: 6px 0; color: #1f2937; }
+.review-stars { margin: 0; color: #d97706; font-weight: 700; }
+.review-stars span { color: #6b7280; font-weight: 500; }
+
+.story-form {
+    display: grid;
+    gap: 10px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+}
+
+.story-form input,
+.story-form textarea {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 14px;
+    background: #fdfdfd;
+}
+
+@media (max-width: 900px) {
+    .hero-stats,
+    .review-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .coffee-hero h2 { font-size: 26px; }
+}
