@@ -1,109 +1,131 @@
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""
+/>
+
 <style>
-  .menu-grid {
-    display: grid;
-    gap: 12px;
-  }
-
-  .menu-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 14px 16px;
-    border: 1px solid #E5E7EB;
-    border-radius: 12px;
-    background: #fff;
-
-    text-decoration: none;
-    color: inherit;
-
-    transition: background-color .15s ease, box-shadow .15s ease, border-color .15s ease;
-  }
-
-  /* ✅ hover 시 회색 하이라이트 */
-  .menu-card:hover {
-    background: #F3F4F6;
-    border-color: #E5E7EB;
-    box-shadow: inset 0 0 0 1px #E5E7EB;
-    cursor: pointer;
-  }
-
-  /* ✅ 키보드(Tab) 접근 시도 동일하게 표시 */
-  .menu-card:focus-visible {
-    background: #F3F4F6;
-    outline: none;
-    box-shadow: inset 0 0 0 2px #D1D5DB;
-  }
-
-  .menu-title {
-    font-weight: 650;
-  }
-
-  .menu-desc {
-    font-size: 12.5px;
-    color: #6B7280;
-  }
-
-  .menu-enter {
-    font-size: 12px;
-    color: #6B7280;
-    transition: color .15s ease;
-  }
-
-  /* (선택) hover 시 ENTER 살짝 진하게 */
-  .menu-card:hover .menu-enter {
-    color: #4B5563;
-  }
+  .coffee-grid { display:grid; grid-template-columns: 1.5fr 1fr; gap:16px; }
+  #map { height: 620px; border-radius: 12px; border:1px solid var(--border); }
+  .toolbox { display:grid; gap:12px; }
+  .card { border:1px solid var(--border); border-radius: 12px; padding:12px; }
+  .search-row { display:grid; grid-template-columns: 1fr 140px auto; gap:8px; }
+  .input, .select { width:100%; padding:10px 12px; border:1px solid #d1d5db; border-radius:10px; }
+  .cafe-list { max-height: 300px; overflow:auto; display:grid; gap:8px; margin-top:10px; }
+  .cafe-item { border:1px solid #e5e7eb; border-radius:10px; padding:10px; cursor:pointer; }
+  .cafe-item:hover { background:#f9fafb; }
+  .meta { font-size:12px; color:#6b7280; }
+  .form-grid { display:grid; gap:8px; }
+  @media (max-width: 1100px){ .coffee-grid { grid-template-columns: 1fr; } #map { height:420px; } }
 </style>
 
-<link rel="stylesheet" href="/css/style.css">
+<div class="coffee-grid">
+  <div id="map"></div>
 
-<div class="menu-grid">
-  <a href="/estimate" class="menu-card">
-    <div>
-      <div class="menu-title">견적관리</div>
-      <div class="menu-desc">공사별·거래처별 견적 등록 / 조회</div>
+  <div class="toolbox">
+    <div class="card">
+      <h3>카페 찾기</h3>
+      <div class="search-row">
+        <input id="keyword" class="input" placeholder="카페명/메뉴 검색" />
+        <select id="district" class="select">
+          <option value="">전체 지역</option>
+          <option value="종로구">종로구</option>
+          <option value="중구">중구</option>
+          <option value="마포구">마포구</option>
+          <option value="성동구">성동구</option>
+        </select>
+        <button id="searchBtn" class="btn btn-primary">검색</button>
+      </div>
+      <div id="cafeList" class="cafe-list"></div>
     </div>
-    <div class="menu-enter">ENTER</div>
-  </a>
 
-  <a href="/contract" class="menu-card">
-    <div>
-      <div class="menu-title">계약관리</div>
-      <div class="menu-desc">하도급·자재·용역 계약서 관리</div>
+    <div class="card">
+      <h3>카페 추가</h3>
+      <form id="cafeForm" class="form-grid">
+        <input name="name" class="input" placeholder="카페 이름" required />
+        <input name="district" class="input" placeholder="지역구 (예: 강남구)" required />
+        <input name="address" class="input" placeholder="주소" required />
+        <input name="signature" class="input" placeholder="시그니처 메뉴" />
+        <input name="lat" type="number" step="any" class="input" placeholder="위도" required />
+        <input name="lng" type="number" step="any" class="input" placeholder="경도" required />
+        <button class="btn">저장</button>
+      </form>
     </div>
-    <div class="menu-enter">ENTER</div>
-  </a>
-
-  <a href="/progress" class="menu-card">
-    <div>
-      <div class="menu-title">기성관리</div>
-      <div class="menu-desc">월별 기성 내역 및 정산 관리</div>
-    </div>
-    <div class="menu-enter">ENTER</div>
-  </a>
-
-  <a href="/staff" class="menu-card">
-    <div>
-      <div class="menu-title">직원관리</div>
-      <div class="menu-desc">직원 정보 / 노임 / 투입 현황 관리</div>
-    </div>
-    <div class="menu-enter">ENTER</div>
-  </a>
-
-  <a href="/client" class="menu-card">
-    <div>
-      <div class="menu-title">거래처관리</div>
-      <div class="menu-desc">거래처 등록 / 검색 / 선택(견적 연동)</div>
-    </div>
-    <div class="menu-enter">ENTER</div>
-  </a>
-
-  <a href="/library" class="menu-card">
-    <div>
-      <div class="menu-title">서식 및 자료실</div>
-      <div class="menu-desc">안전/계약/노무 서식, 현장 자료 업로드·검색</div>
-    </div>
-    <div class="menu-enter">ENTER</div>
-  </a>
+  </div>
 </div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+  const map = L.map('map').setView([37.5665, 126.9780], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  let markers = [];
+
+  const renderList = (items) => {
+    const list = document.getElementById('cafeList');
+    list.innerHTML = items.map((cafe) => `
+      <div class="cafe-item" data-id="${cafe.id}">
+        <strong>${cafe.name}</strong>
+        <div class="meta">${cafe.district} · ${cafe.signature}</div>
+        <div class="meta">${cafe.address}</div>
+      </div>
+    `).join('');
+
+    document.querySelectorAll('.cafe-item').forEach((el) => {
+      el.addEventListener('click', () => {
+        const cafe = items.find((item) => item.id === Number(el.dataset.id));
+        if (!cafe) return;
+        map.flyTo([cafe.lat, cafe.lng], 15);
+      });
+    });
+  };
+
+  const renderMarkers = (items) => {
+    markers.forEach((marker) => map.removeLayer(marker));
+    markers = items.map((cafe) => {
+      const marker = L.marker([cafe.lat, cafe.lng]).addTo(map);
+      marker.bindPopup(`<b>${cafe.name}</b><br/>${cafe.address}<br/>⭐ ${cafe.rating}`);
+      return marker;
+    });
+  };
+
+  const loadCafes = async () => {
+    const keyword = document.getElementById('keyword').value;
+    const district = document.getElementById('district').value;
+
+    const params = new URLSearchParams({ keyword, district });
+    const res = await fetch(`/api/cafes?${params.toString()}`);
+    const data = await res.json();
+
+    renderList(data.items);
+    renderMarkers(data.items);
+  };
+
+  document.getElementById('searchBtn').addEventListener('click', loadCafes);
+
+  document.getElementById('cafeForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const payload = Object.fromEntries(formData.entries());
+
+    const res = await fetch('/api/cafes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      alert('입력값을 확인해주세요.');
+      return;
+    }
+
+    e.target.reset();
+    await loadCafes();
+  });
+
+  loadCafes();
+</script>
