@@ -19,6 +19,10 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const coffeeRouter = require("./routes/coffeeRoutes");
 app.use("/", coffeeRouter);
 
+require("dotenv").config();
+const placeRoutes = require("./routes/placeRoutes");
+app.use(placeRoutes);
+
 app.listen(PORT, () => {
   console.log(`서버 실행 중: http://localhost:${PORT}`);
 });

@@ -28,30 +28,15 @@
       <h3>카페 찾기</h3>
       <div class="search-row">
         <input id="keyword" class="input" placeholder="카페명/메뉴 검색" />
-        <select id="district" class="select">
-          <option value="">전체 지역</option>
-          <option value="종로구">종로구</option>
-          <option value="중구">중구</option>
-          <option value="마포구">마포구</option>
-          <option value="성동구">성동구</option>
-        </select>
-        <button id="searchBtn" class="btn btn-primary">검색</button>
+             <input id="cafeSearchKeyword" ... />   <!-- 카페명/메뉴 검색 input -->
+        <select id="cafeSearchDistrict" ...>...</select>  <!-- 지역구 select -->
+        <button id="cafeSearchBtn" type="button">검색</button>
       </div>
       <div id="cafeList" class="cafe-list"></div>
     </div>
-
-    <div class="card">
-      <h3>카페 추가</h3>
-      <form id="cafeForm" class="form-grid">
-        <input name="name" class="input" placeholder="카페 이름" required />
-        <input name="district" class="input" placeholder="지역구 (예: 강남구)" required />
-        <input name="address" class="input" placeholder="주소" required />
-        <input name="signature" class="input" placeholder="시그니처 메뉴" />
-        <input name="lat" type="number" step="any" class="input" placeholder="위도" required />
-        <input name="lng" type="number" step="any" class="input" placeholder="경도" required />
-        <button class="btn">저장</button>
-      </form>
-    </div>
+    
+    <div id="cafeSearchResults"></div>
+    
   </div>
 </div>
 
